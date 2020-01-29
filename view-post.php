@@ -10,6 +10,7 @@ require 'db.php';?>
   $email = $_POST['email'];
   $remail = $_POST['remail'];
   $pass = $_POST['pass'];
+  $hash_pass = password_hash($pass, PASSWORD_DEFAULT);
   $rpass = $_POST['rpass'];
   $uper = preg_match('@[A-Z]@', $pass);
   $lower = preg_match('@[a-z]@', $pass);
@@ -42,7 +43,7 @@ require 'db.php';?>
     $_SESSION['lname_err'] = "Last name please!!";
     header('location:register.php');
   }
-  
+
   elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['email_err'] = "Requerd valid email";
     header('location:register.php');
@@ -121,7 +122,7 @@ else{
             header('location:register.php');
           }
           else{
-            $insert = "INSERT INTO users_info (fname,email,pass,gen,country,birth_date,university,prog,skills,create_datetime,hobbies,user_comment,roll) VALUES ('$fname','$email','$pass','$gen','$country','$date','$university','$prog','$skills_show','$create_datetime',
+            $insert = "INSERT INTO users_info (fname,email,pass,gen,country,birth_date,university,prog,skills,create_datetime,hobbies,user_comment,roll) VALUES ('$fname','$email','$hash_pass','$gen','$country','$date','$university','$prog','$skills_show','$create_datetime',
             '$hobbies_show','$comment','$roll')";
          $insert_values = mysqli_query($db_connection,$insert);
 

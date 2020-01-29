@@ -1,4 +1,11 @@
+<?php
+  require 'db.php';
 
+  $select_pending = "SELECT COUNT(*) as pending FROM blog_section WHERE status = 0 ";
+  $pending_result = mysqli_query($db_connection, $select_pending);
+  $after_assoc = mysqli_fetch_assoc($pending_result);
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -418,6 +425,10 @@
                 <span class="badge badge-success">New</span>
               </a>
             </li>
+            <!-- ===========
+                Start foreach
+              =============== -->
+            <?php if($_SESSION['roll']!=0 && $_SESSION['roll']!=5) {?>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
                 <i class="icon-check menu-icon"></i>
@@ -476,35 +487,34 @@
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#editors" aria-expanded="false" aria-controls="editors">
                 <i class="icon-anchor menu-icon"></i>
-                <span class="menu-title">Editors</span>
+                <span class="menu-title">Who we are section</span>
                 <span class="badge badge-info">3</span>
               </a>
               <div class="collapse" id="editors">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/text_editor.html">Text editors</a></li>
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/code_editor.html">Code editors</a></li>
+                  <li class="nav-item"><a class="nav-link" href="about_form.php">Add about</a></li>
+                  <li class="nav-item"><a class="nav-link" href="about_show.php">View about</a></li>
                 </ul>
               </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
                 <i class="icon-pie-chart menu-icon"></i>
-                <span class="menu-title">Charts</span>
+                <span class="menu-title">Social links</span>
                 <span class="badge badge-warning">4</span>
               </a>
               <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/charts/morris.html">Morris</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/charts/flot-chart.html">Flot</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/charts/google-charts.html">Google charts</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="social_form.php">Add Social</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="social_show.php">Veiw Social</a></li>
+
                 </ul>
                 </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/popups.html">
+              <a class="nav-link" href="#">
                 <i class="icon-diamond menu-icon"></i>
-                <span class="menu-title">Popups</span>
+                <span class="menu-title">kkkkk</span>
               </a>
             </li>
             <li class="nav-item">
@@ -534,6 +544,28 @@
                 <span class="menu-title">E-mail</span>
               </a>
             </li>
+
+          <?php } ?>
+          <!-- ===========
+              end foreach
+            =============== -->
+
+          <li class="nav-item d-none d-lg-block">
+            <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
+              <i class="icon-layers menu-icon"></i>
+              <span class="menu-title">Blog</span>
+              <span class="badge badge-warning">5</span>
+            </a>
+            <div class="collapse" id="sidebar-layouts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="blog_form.php">Add Blog</a></li>
+                <li class="nav-item"> <a class="nav-link" href="blog_show.php">Blog View</a></li>
+                <?php if($_SESSION['roll']!=5) {?>
+                <li class="nav-item"> <a class="nav-link" href="pending_blog.php">Pending blog<span class="badge badge-warning"><?php echo $after_assoc['pending'];?></span></a></li>
+              <?php } ?>
+              </ul>
+            </div>
+          </li>
             <li class="nav-item">
               <a class="nav-link" href="logout.php">
                 <i class="icon-picture menu-icon"></i>
