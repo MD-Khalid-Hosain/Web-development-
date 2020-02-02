@@ -4,7 +4,7 @@ $banner_result = mysqli_query($db_connection,$banner_selet);
 $after_assoc_banner = mysqli_fetch_assoc($banner_result);
 ?>
 <?php
-$service_selet = "SELECT * FROM service_section LIMIT 2";
+$service_selet = "SELECT * FROM service_section WHERE status=1 ";
 $service_result = mysqli_query($db_connection,$service_selet);
 
 ?>
@@ -13,6 +13,17 @@ $work_selet = "SELECT * FROM work_section";
 $work_result = mysqli_query($db_connection,$work_selet);
 
 ?>
+<?php
+$social_select = "SELECT * FROM social_section WHERE status=1";
+$social_result = mysqli_query($db_connection,$social_select);
+ ?>
+<?php
+$about_selet = "SELECT * FROM about_section WHERE status=1";
+$about_result = mysqli_query($db_connection,$about_selet);
+$after_assoc_about = mysqli_fetch_assoc($about_result);
+$a = $after_assoc_about['why_choose'];
+$b = explode(",",$a);
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,6 +79,8 @@ $work_result = mysqli_query($db_connection,$work_selet);
         <li><a href="#portfolio" class="page-scroll">Projects</a></li>
         <li><a href="#testimonials" class="page-scroll">Testimonials</a></li>
         <li><a href="#contact" class="page-scroll">Contact</a></li>
+        <li><a href="singup.php" class="page-scroll">Sing Up</a></li>
+        <li><a href="login.php" class="page-scroll">Log in</a></li>
       </ul>
     </div>
     <!-- /.navbar-collapse -->
@@ -108,29 +121,21 @@ $work_result = mysqli_query($db_connection,$work_selet);
 <div id="about">
   <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-md-6"> <img src="img/about.jpg" class="img-responsive" alt=""> </div>
+      <div class="col-xs-12 col-md-6"> <img src="upload/about/<?php echo $after_assoc_about['about_picture']; ?>" class="img-responsive" alt=""> </div>
       <div class="col-xs-12 col-md-6">
         <div class="about-text">
           <h2>Who We Are</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p><?php echo $after_assoc_about['about_des'] ?></p>
           <h3>Why Choose Us?</h3>
           <div class="list-style">
+            <?php foreach($b as $c){ ?>
             <div class="col-lg-6 col-sm-6 col-xs-12">
               <ul>
-                <li>Years of Experience</li>
-                <li>Fully Insured</li>
-                <li>Cost Control Experts</li>
-                <li>100% Satisfaction Guarantee</li>
+                <li><?php echo $c ;?></li>
               </ul>
             </div>
-            <div class="col-lg-6 col-sm-6 col-xs-12">
-              <ul>
-                <li>Free Consultation</li>
-                <li>Satisfied Customers</li>
-                <li>Project Management</li>
-                <li>Affordable Pricing</li>
-              </ul>
-            </div>
+            <?php } ?>
+
           </div>
         </div>
       </div>
@@ -145,10 +150,9 @@ $work_result = mysqli_query($db_connection,$work_selet);
     </div>
     <div class="row">
       <?php foreach ($service_result as  $service) {?>
-
-
       <div class="col-md-4">
-        <div class="service-media"> <img src="upload/service/<?php echo $service['service_picture']; ?>" alt=" "></div>
+        <div class="service-media"> <img src="upload/service/<?php echo $service['service_picture']; ?>" alt=" ">
+        </div>
         <div class="service-desc">
           <h3><?php echo $service['service_title']; ?></h3>
           <p><?php echo $service['service_des']; ?></p>
@@ -257,26 +261,26 @@ $work_result = mysqli_query($db_connection,$work_selet);
           <h2>Get In Touch</h2>
           <p>Please fill out the form below to send us an email and we will get back to you as soon as possible.</p>
         </div>
-        <form name="sentMessage" id="contactForm" novalidate>
+        <form  action="innova_post.php" method="post">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <input type="text" id="name" class="form-control" placeholder="Name" required="required">
+                <input type="text"  name="user_name"  class="form-control" placeholder="Name" required="required">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <input type="email" id="email" class="form-control" placeholder="Email" required="required">
+                <input type="email"  name="user_email" class="form-control" placeholder="Email" required="required">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+            <textarea name="user_comment"  class="form-control" rows="4" placeholder="Message" required></textarea>
             <p class="help-block text-danger"></p>
           </div>
-          <div id="success"></div>
+          <div ></div>
           <button type="submit" class="btn btn-custom btn-lg">Send Message</button>
         </form>
       </div>
@@ -298,10 +302,13 @@ $work_result = mysqli_query($db_connection,$work_selet);
       <div class="row">
         <div class="social">
           <ul>
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <?php foreach ($social_result as $social) {?>
+
+            <li><a href="<?php echo $social['social_link']; ?>" target="_blank"><i class="fa <?php echo $social['social_icon'];?>"></i></a></li>
+          <?php } ?>
+            <!-- <li><a href="#"><i class="fa fa-twitter"></i></a></li>
             <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+            <li><a href="#"><i class="fa fa-youtube"></i></a></li> -->
           </ul>
         </div>
       </div>
@@ -318,7 +325,7 @@ $work_result = mysqli_query($db_connection,$work_selet);
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/SmoothScroll.js"></script>
 <script type="text/javascript" src="js/nivo-lightbox.js"></script>
-<script type="text/javascript" src="js/jqBootstrapValidation.js"></script>
+<!-- <script type="text/javascript" src="js/jqBootstrapValidation.js"></script> -->
 <script type="text/javascript" src="js/contact_me.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>

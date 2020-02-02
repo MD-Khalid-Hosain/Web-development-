@@ -24,6 +24,7 @@
                             <th>Service Title</th>
                             <th>Service Description</th>
                             <th>Service Picture</th>
+                            <th>Service status</th>
                             <th colspan="3">Action</th>
                         </tr>
                         <?php foreach($select_result as $service_info){?>
@@ -35,6 +36,9 @@
 
                             <td><img src="upload/service/<?php echo $service_info['service_picture']; ?>" alt="" width="100"></td>
 
+                            <td>
+                                  <a type="button" href="active_inactive.php?id=<?php echo $service_info['id'];?>" class="<?=($service_info['status']==1)?'btn btn-success':'btn btn-danger'?>"><?=($service_info['status']==1)?'Active':'Deactive'?></a>
+                            </td>
 
                           <?php if($_SESSION['roll']==1){?>
                             <td><a type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter<?php echo $service_info['id'];?>">
