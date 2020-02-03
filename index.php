@@ -60,6 +60,43 @@ $b = explode(",",$a);
     <![endif]-->
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+  <!--============
+   chat section
+  =================-->
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>
+  window.fbAsyncInit = function() {
+  FB.init({
+  xfbml            : true,
+  version          : 'v5.0'
+  });
+  };
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your customer chat code -->
+  <div class="fb-customerchat"
+  attribution=setup_tool
+  page_id="1226123674075858"
+  theme_color="#0084ff"
+  logged_in_greeting="Hi! I am Khalid How can we help you?"
+  logged_out_greeting="Hi! I am Khalid How can we help you?">
+  </div>
+
+  <!--============
+   chat section
+  =================-->
+
+
+
+
 <!-- Navigation
     ==========================================-->
 <nav id="menu" class="navbar navbar-default navbar-fixed-top">
@@ -321,6 +358,9 @@ $b = explode(",",$a);
     <p>&copy; 2017 INNOVA. Design by <a href="http://www.templatewire.com" rel="nofollow">TemplateWire</a></p>
   </div>
 </div>
+
+
+
 <script type="text/javascript" src="js/jquery.1.11.1.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/SmoothScroll.js"></script>

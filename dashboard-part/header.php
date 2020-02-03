@@ -1,11 +1,13 @@
 <?php
   require 'db.php';
 
-  $select_pending = "SELECT COUNT(*) as pending FROM blog_section WHERE status = 0 ";
+  $select_pending = "SELECT COUNT(*) as pending FROM blog_section WHERE status = 0";
   $pending_result = mysqli_query($db_connection, $select_pending);
   $after_assoc = mysqli_fetch_assoc($pending_result);
 
+
  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +26,10 @@
   <link rel="stylesheet" href="dashboard-asset/vendors/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="dashboard-asset/vendors/jquery-bar-rating/fontawesome-stars.css">
   <!-- End plugin css for this page -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
   <!-- inject:css -->
   <link rel="stylesheet" href="dashboard-asset/css/style.css">
   <!-- endinject -->
@@ -98,54 +104,49 @@
               <span class="count"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-              <a class="dropdown-item">
-                <p class="mb-0 font-weight-normal float-left">You have 4 new notifications
-                </p>
-                <span class="badge badge-pill badge-warning float-right">View all</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-success">
-                    <i class="icon-info mx-0"></i>
+                <a class="dropdown-item">
+                  <p class="mb-0 font-weight-normal float-left"><?php echo $after_assoc['pending']; ?></p>
+                  <span class="badge badge-pill badge-warning float-right">View all</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <?php
+                  $select_notification = "SELECT * FROM blog_section WHERE status=0";
+                  $select_notification_result = mysqli_query($db_connection,$select_notification);
+                  $after_assoc_notification = mysqli_fetch_assoc($select_notification_result);
+                 ?>
+                 <?php if($_SESSION['roll']!=5){ ?>
+                 <?php foreach($select_notification_result as $notification ){ ?>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-success">
+                      <i class="icon-info mx-0"></i>
+                    </div>
                   </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-medium">Application Error</h6>
-                  <p class="font-weight-light small-text">
-                    Just now
-                  </p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-warning">
-                    <i class="icon-speech mx-0"></i>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-medium"><?php echo $notification["blog_title"];?></h6>
+                    <?php
+                    $user_id = $notification['user_id'];
+                      $select_from_user_tb = "SELECT * FROM users_info WHERE id= '$user_id'";
+                      $select_from_user_tb_result = mysqli_query($db_connection, $select_from_user_tb);
+                      $after_assoc_users_inf = mysqli_fetch_assoc($select_from_user_tb_result);
+                     ?>
+                    <p class="font-weight-light small-text">
+                       <?php echo $after_assoc_users_inf['fname']; ?>
+                    </p>
                   </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-medium">Settings</h6>
-                  <p class="font-weight-light small-text">
-                    Private message
-                  </p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-info">
-                    <i class="icon-envelope mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-medium">New user registration</h6>
-                  <p class="font-weight-light small-text">
-                    2 days ago
-                  </p>
-                </div>
-              </a>
-            </div>
+                </a>
+              <?php } ?>
+               <?php } else{
+              if($after_assoc_notification['status']==0 and $after_assoc_notification['user_id']==$_SESSION['id']){
+                echo "Pending";
+              }
+              else{
+                  echo "Active";
+              }
+            }
+              ?>
+
+              </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
@@ -554,7 +555,7 @@
             <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
               <i class="icon-layers menu-icon"></i>
               <span class="menu-title">Blog</span>
-              <span class="badge badge-warning">5</span>
+              <span class="badge badge-warning"></span>
             </a>
             <div class="collapse" id="sidebar-layouts">
               <ul class="nav flex-column sub-menu">

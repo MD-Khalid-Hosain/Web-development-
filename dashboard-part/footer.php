@@ -15,6 +15,17 @@
 </div>
 <!-- container-scroller -->
 
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#dtBasicExample').DataTable();
+} );
+</script>
 <!-- plugins:js -->
 <script src="dashboard-asset/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->
@@ -32,6 +43,7 @@
 <script src="dashboard-asset/js/settings.js"></script>
 <script src="dashboard-asset/js/todolist.js"></script>
 <!-- endinject -->
+
 <!-- Custom js for this page-->
 <script src="js/dashboard.js"></script>
 <!-- End custom js for this page-->

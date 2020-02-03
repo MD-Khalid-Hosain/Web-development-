@@ -24,6 +24,7 @@ require 'session.php';
                            <th>Blog Title</th>
                            <th>Blog Description</th>
                            <th>Status</th>
+                        
                            <th colspan="3">Action</th>
                        </tr>
                        <?php foreach($select_result as $pending){?>
@@ -34,7 +35,9 @@ require 'session.php';
 
 
 
-                            <td> <a type="button" href="active_blog_post.php?user_id=<?php echo $pending['user_id'];?>" class="<?=($pending['status']==1)?'btn btn-success':'btn btn-danger'?>"><?=($pending['status']==1)?'Active':'Deactive'?></a> </td>
+                            <td> <a type="button" href="active_blog_post.php?id=<?php echo $pending['id'];?>" class="<?=($pending['status']==1)?'btn btn-success':'btn btn-danger'?>"><?=($pending['status']==1)?'Active':'Deactive'?></a> </td>
+
+
 
                                                               <!--=============
                                                                Start Edit button

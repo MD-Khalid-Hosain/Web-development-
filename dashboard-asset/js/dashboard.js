@@ -29,6 +29,7 @@
         initialRating: '1',
       });
     }
+  
     if ($("#dashboard-lineChart").length) {
       var lineChartCanvas = $("#dashboard-lineChart").get(0).getContext("2d");
       var lineChart = new Chart(lineChartCanvas, {

@@ -34,6 +34,7 @@
                            <th>ID</th>
                            <th>Blog Title</th>
                            <th>Blog Description</th>
+                           <th>by</th>
                            <th>Status</th>
                            <th colspan="3">Action</th>
                        </tr>
@@ -43,8 +44,13 @@
                            <td><?php echo $blog_info['blog_title']; ?></td>
                            <td><?php echo $blog_info['blog_des']?></td>
 
-
-
+                           <?php
+                            $user_id = $blog_info['user_id'];
+                            $who_post = "SELECT * FROM users_info WHERE id='$user_id'";
+                            $result = mysqli_query($db_connection,$who_post);
+                            $after_assoc_result = mysqli_fetch_assoc($result);
+                            ?>
+                           <td><?php echo $after_assoc_result['fname'];?></td>
                             <td> <a type="button" href="active_blog_post.php?id=<?php echo $blog_info['id'];?>" class="<?=($blog_info['status']==1)?'btn btn-success':'btn btn-danger'?>"><?=($blog_info['status']==1)?'Active':'Deactive'?></a> </td>
 
                                                               <!--=============
